@@ -9,6 +9,16 @@ public enum AbnormalType
     Player_Move_Abnormal = 1,
     Billboard_Text_Abnormal,
     Smoke_Sign_Follow_Abnormal,
+    Drinker_Red_Abnormal,
+    Window_RedHand_Abnormal,
+    Door_Red_Abnormal,
+    Clock_Reverse_Abnormal,
+    Fan_Red_Abnormal,
+    Mirror_Abnormal,
+    Billboard_Photo_Abnormal,
+    Bed_Stack_Abnormal,
+    Evelator_Sound_Abnormal,
+    Room_InteractSound_Abnormal,
 }
 public class AbnormalManager
 {
@@ -23,7 +33,6 @@ public class AbnormalManager
     public AbnormalType SelectAbnormal()
     {
         float randomValue = UnityEngine.Random.value;
-        return AbnormalType.Smoke_Sign_Follow_Abnormal;
         if (randomValue < AbnormalProbability)
         {
             //触发异常

@@ -10,15 +10,8 @@ public class AbnormalText : MonoBehaviour
     {
        var type = GameManager.Instance.GetCurrentAbnormalType();
        //把type转换为对应的文本描述
-         string abnormalText = type switch
-         {
-              AbnormalType.Player_Move_Abnormal => "Player Move Abnormal",
-              AbnormalType.Smoke_Sign_Follow_Abnormal => "Smoke Sign Follow Abnormal",
-              AbnormalType.Billboard_Text_Abnormal => "Billboard Text Abnormal",
-              _ => "Safe or Unknown Abnormal"
-         };
 
-       GetComponent<TMP_Text>().text = abnormalText;
+       GetComponent<TMP_Text>().text = type.ToString();
     }
 
 

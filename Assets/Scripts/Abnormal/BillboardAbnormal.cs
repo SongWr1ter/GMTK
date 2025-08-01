@@ -6,12 +6,12 @@ using UnityEngine;
 public class BillboardAbnormal : AbnormalObject
 {
     [SerializeField] private List<CanvasGroup> texts = new List<CanvasGroup>();
-    
+    [SerializeField] private AbnormalType billboardAbnormalType;
     protected override void Abnormalize(CommonMessage message)
     {
         AbnormalType type = (AbnormalType)message.Mid;
 
-        if (type == AbnormalType.Billboard_Text_Abnormal)
+        if (type == billboardAbnormalType)
         {
             for (int i = 0; i < texts.Count; i++)
             {

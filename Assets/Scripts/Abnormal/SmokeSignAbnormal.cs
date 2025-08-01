@@ -32,6 +32,7 @@ public class SmokeSignAbnormal : AbnormalObject
         if (abnormalType == AbnormalType.Smoke_Sign_Follow_Abnormal)
         {
             _activeFlag = true;
+            _rb = GetComponent<Rigidbody2D>();
         }
     }
 
@@ -49,6 +50,7 @@ public class SmokeSignAbnormal : AbnormalObject
         if (_target == null) return;
 
         Vector2 directionToTarget = _target.position - transform.position;
+        directionToTarget.y = 0;
         float distanceToTarget = directionToTarget.magnitude;
 
         // 检查是否应该移动的条件
@@ -87,7 +89,7 @@ public class SmokeSignAbnormal : AbnormalObject
 
     private bool IsTargetLooking()
     {
-        bool target2Left = _target.GetComponent<SpriteRenderer>().flipX;
+        bool target2Left = !_target.GetComponent<SpriteRenderer>().flipX;
         bool targetOnLeft = _target.position.x < transform.position.x;
         return target2Left == targetOnLeft;
     }
