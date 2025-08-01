@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [Header("Interaction Settings")]
+    [SerializeField] private float interactiveRadius = 0.2f;
+    [SerializeField] private LayerMask interactiveLayer;
 
     // 动画参数哈希值（性能优化）
     private static readonly int SpeedHash = Animator.StringToHash("Speed");
@@ -21,6 +25,7 @@ public class PlayerControl : MonoBehaviour
     private float _currentSpeed;
     private float _targetDirection;
     private bool _filpXCache;
+    private Transform _interactCache = null;
 
     private void Update()
     {
@@ -31,6 +36,7 @@ public class PlayerControl : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyMovement();
+        CheckInteractiveObject();
     }
 
     private void HandleInput()
@@ -86,7 +92,52 @@ public class PlayerControl : MonoBehaviour
         //animator.SetBool(MovingHash, absSpeed > 0.1f);
     }
 
-    #if UNITY_EDITOR
+    private void CheckInteractiveObject()
+    {
+        // 获取当前交互范围内的碰撞体
+        Collider2D col = Physics2D.OverlapCircle(rb.position, interactiveRadius, interactiveLayer);
+    
+        // 没有缓存对象时处理新交互对象
+        if (_interactCache == null)
+        {
+            if (col != null && col.TryGetComponent(out Interactive interactive))
+            {
+                interactive.ShowInteract();
+                _interactCache = col.transform;
+            }
+            return;
+        }
+    
+        // 处理已有缓存对象的情况
+        bool isStillInteracting = col != null && _interactCache == col.transform;
+    
+        if (!isStillInteracting)
+        {
+            if (_interactCache.TryGetComponent(out Interactive cachedInteractive))
+            {
+                cachedInteractive.HideInteract();
+            }
+            _interactCache = null;
+        
+            // 检查是否有新的可交互对象
+            if (col != null && col.TryGetComponent(out Interactive newInteractive))
+            {
+                newInteractive.ShowInteract();
+                _interactCache = col.transform;
+            }
+        }
+    }
+
+    private void Interact()
+    {
+        
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(rb.position, interactiveRadius);
+    }
+#if UNITY_EDITOR
     // 编辑器自动获取组件引用
     private void OnValidate()
     {
