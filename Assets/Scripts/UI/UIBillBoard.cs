@@ -5,7 +5,7 @@ using UnityEngine;
 public class UIBillBoard : MonoBehaviour
 {
     private CanvasGroup canvasGroup;
-    private bool _showingUI;
+    private bool _showingUI = true;
     // Start is called before the first frame update
     void Start()
     {
