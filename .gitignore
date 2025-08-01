@@ -65,3 +65,7 @@ crashlytics-build.properties
 UserSettings/Layouts/default-2022.dwlt
 
 Assets/Fonts/NotoSansSC-Regular SDF.asset
+
+ProjectSettings/BurstAotSettings_StandaloneWindows.json
+
+ProjectSettings/CommonBurstAotSettings.json
