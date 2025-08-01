@@ -5,34 +5,39 @@ using UnityEngine;
 
 public enum AbnormalType
 {
-    None,
-    Player_Move_Abnormal,
+    None = 0,
+    Player_Move_Abnormal = 1,
+    Billboard_Text_Abnormal,
+    Smoke_Sign_Follow_Abnormal,
 }
-public class AbnormalManager : MonoBehaviour
+public class AbnormalManager
 {
     //维护一个所有异常事件表:id,描述
-    
     //负责选择某个异常
-    
-    //给所有有AbnormalObject接口的物体发送信号
-    private void Update()
+    private const float AbnormalProbability = 0.5f; //异常发生概率
+    public AbnormalManager()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+    }
+    
+    public AbnormalType SelectAbnormal()
+    {
+        float randomValue = UnityEngine.Random.value;
+        return AbnormalType.Smoke_Sign_Follow_Abnormal;
+        if (randomValue < AbnormalProbability)
         {
-            SendMessage();
+            //触发异常
+            //从AbnormalType中随机选择一个异常
+            Array values = Enum.GetValues(typeof(AbnormalType));
+            AbnormalType randomAbnormal = (AbnormalType)values.GetValue(UnityEngine.Random.Range(1, values.Length));
+            //返回异常类型
+            return randomAbnormal;
         }
-    }
-
-    private void SendMessage()
-    {
-        MessageCenter.SendMessage(new CommonMessage()
+        else
         {
-            Mid = SelectAbnormal(),
-        },MESSAGE_TYPE.ABNORMAL);
-    }
-    
-    private int SelectAbnormal()
-    {
-        return (int)AbnormalType.Player_Move_Abnormal;
+            //没有异常
+            return AbnormalType.None;
+        }
+        
     }
 }

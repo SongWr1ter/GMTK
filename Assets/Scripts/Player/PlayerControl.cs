@@ -31,6 +31,7 @@ public class PlayerControl : MonoBehaviour
     {
         HandleInput();
         UpdateAnimation();
+        Interact();
     }
 
     private void FixedUpdate()
@@ -116,6 +117,7 @@ public class PlayerControl : MonoBehaviour
             if (_interactCache.TryGetComponent(out Interactive cachedInteractive))
             {
                 cachedInteractive.HideInteract();
+                cachedInteractive.ExitInteract();
             }
             _interactCache = null;
         
@@ -130,7 +132,11 @@ public class PlayerControl : MonoBehaviour
 
     private void Interact()
     {
-        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (_interactCache != null)
+                _interactCache.GetComponent<Interactive>().OnInteract();
+        }
     }
     private void OnDrawGizmos()
     {

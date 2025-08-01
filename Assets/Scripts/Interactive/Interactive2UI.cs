@@ -1,20 +1,19 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Billboard : MonoBehaviour,Interactive
+public class Interactive2UI : MonoBehaviour,Interactive
 {
-    [SerializeField]private UIBillBoard _uiBillBoard;
+    [SerializeField]private UIPop ui;
     [SerializeField]private GameObject _interactButton;
     public void OnInteract()
     {
-        _uiBillBoard.Show(true);
+        ui.Show(true);
     }
     
     public void ExitInteract()
     {
-        _uiBillBoard.Show(false);
+        ui.Show(false);
     }
 
     public void HideInteract()

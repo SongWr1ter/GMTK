@@ -1,20 +1,20 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Billboard : MonoBehaviour,Interactive
+public class Stairs : MonoBehaviour,Interactive
 {
-    [SerializeField]private UIBillBoard _uiBillBoard;
+    [SerializeField] private bool AnswerIsAbnormalGate; // 是否有异常门
+    
     [SerializeField]private GameObject _interactButton;
     public void OnInteract()
     {
-        _uiBillBoard.Show(true);
+        GameManager.Instance.NextScene(AnswerIsAbnormalGate);
     }
     
     public void ExitInteract()
     {
-        _uiBillBoard.Show(false);
+        
     }
 
     public void HideInteract()

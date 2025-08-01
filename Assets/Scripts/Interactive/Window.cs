@@ -1,20 +1,24 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Billboard : MonoBehaviour,Interactive
+public class Window : MonoBehaviour,Interactive
 {
-    [SerializeField]private UIBillBoard _uiBillBoard;
+    [SerializeField]private UIDialogue dialogue;
     [SerializeField]private GameObject _interactButton;
+    [SerializeField,TextArea]private string showText = "玻璃后面静悄悄的。";
+    public void SetShowText(string text)
+    {
+        showText = text;
+    }
     public void OnInteract()
     {
-        _uiBillBoard.Show(true);
+        dialogue.Show(true,showText);
     }
     
     public void ExitInteract()
     {
-        _uiBillBoard.Show(false);
+        dialogue.Show(false);
     }
 
     public void HideInteract()
