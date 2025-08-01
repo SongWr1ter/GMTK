@@ -16,16 +16,16 @@ public class PlayerControl : MonoBehaviour
 
     // 动画参数哈希值（性能优化）
     private static readonly int SpeedHash = Animator.StringToHash("Speed");
-    private static readonly int MovingHash = Animator.StringToHash("Moving");
+    //private static readonly int MovingHash = Animator.StringToHash("Moving");
 
     private float _currentSpeed;
     private float _targetDirection;
+    private bool _filpXCache;
 
     private void Update()
     {
         HandleInput();
         UpdateAnimation();
-        UpdateFacingDirection();
     }
 
     private void FixedUpdate()
@@ -58,6 +58,16 @@ public class PlayerControl : MonoBehaviour
                 deceleration * Time.fixedDeltaTime
             );
         }
+        //脸朝向
+        if (rawInput != 0)
+        {
+            spriteRenderer.flipX = _targetDirection < 0;
+            _filpXCache = spriteRenderer.flipX;
+        }
+        else
+        {
+            spriteRenderer.flipX = _filpXCache;
+        }
     }
 
     private void ApplyMovement()
@@ -66,23 +76,14 @@ public class PlayerControl : MonoBehaviour
         rb.velocity = new Vector2(_currentSpeed, rb.velocity.y);
     }
 
-    private void UpdateFacingDirection()
-    {
-        // 仅在输入时更新方向
-        if (_targetDirection != 0)
-        {
-            spriteRenderer.flipX = _targetDirection < 0;
-        }
-    }
-
     private void UpdateAnimation()
     {
-        // // 使用绝对速度值控制混合树
-        // float absSpeed = Mathf.Abs(_currentSpeed);
-        // animator.SetFloat(SpeedHash, absSpeed);
-        //
-        // // 设置布尔值用于动画过渡（可选）
-        // animator.SetBool(MovingHash, absSpeed > 0.1f);
+        // 使用绝对速度值控制混合树
+        float absSpeed = Mathf.Abs(_currentSpeed);
+        animator.SetFloat(SpeedHash, absSpeed);
+        
+        // 设置布尔值用于动画过渡（可选）
+        //animator.SetBool(MovingHash, absSpeed > 0.1f);
     }
 
     #if UNITY_EDITOR
