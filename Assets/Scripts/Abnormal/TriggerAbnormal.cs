@@ -7,6 +7,7 @@ public class TriggerAbnormal : AbnormalObject
 {
     [SerializeField]private AbnormalType _abnormalType;
     [SerializeField]private List<FunctionSO> functions = new List<FunctionSO>();
+    [SerializeField] private Transform abnormalTarget = null;
     private int index = 0;
     protected override void Abnormalize(CommonMessage message)
     {
@@ -19,6 +20,16 @@ public class TriggerAbnormal : AbnormalObject
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        functions[index].Execute(transform);
+        if (other.CompareTag("Player"))
+        {
+            if (abnormalTarget is null)
+                functions[index].Execute(transform);
+            else
+            {
+                functions[index].Execute(abnormalTarget);
+            }
+        }
+        
+        
     }
 }

@@ -19,6 +19,8 @@ public enum AbnormalType
     Bed_Stack_Abnormal,
     Evelator_Sound_Abnormal,
     Room_InteractSound_Abnormal,
+    Room_Number_Abnormal,
+    Floor_Run_Abnormal,
 }
 public class AbnormalManager
 {

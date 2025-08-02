@@ -6,7 +6,7 @@ public class ActiveAbnormal : AbnormalObject
 {
     [SerializeField]private AbnormalType _abnormalType;
     [SerializeField]private FunctionSO function;
-
+    [SerializeField] private Transform abnormalTarget = null;
     protected override void Awake()
     {
         base.Awake();
@@ -22,7 +22,12 @@ public class ActiveAbnormal : AbnormalObject
             // For example, an Animator or a specific script
             if (function != null)
             {
-                function.Execute(transform);
+                if (abnormalTarget is null)
+                    function.Execute(transform);
+                else
+                {
+                    function.Execute(abnormalTarget);
+                }
             }
         }
     }

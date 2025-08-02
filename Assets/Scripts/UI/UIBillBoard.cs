@@ -6,11 +6,12 @@ public class UIBillBoard : MonoBehaviour
 {
     private CanvasGroup canvasGroup;
     private bool _showingUI = true;
-    // Start is called before the first frame update
+// Start is called before the first frame update
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         Show(false);
+        
     }
 
     public void Show(bool show)
@@ -23,4 +24,5 @@ public class UIBillBoard : MonoBehaviour
             canvasGroup.blocksRaycasts = show;
         }
     }
+    
 }

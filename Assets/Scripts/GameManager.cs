@@ -7,6 +7,7 @@ public class GameManager : SingleTon<GameManager>
 {
     private static bool hasAbnormal = false;
     public AbnormalType abType;
+    public bool debug;
     public static bool HasAbnormal => hasAbnormal;
     
     private AbnormalManager _abnormalManager = new AbnormalManager();
@@ -46,7 +47,8 @@ public class GameManager : SingleTon<GameManager>
     public void InitScene()
     {
         currentAbnormalType = _abnormalManager.SelectAbnormal();
-        // currentAbnormalType = abType;
+        if (currentLevel == 1) currentAbnormalType = AbnormalType.None;
+        if(debug) currentAbnormalType = abType;
         hasAbnormal = currentAbnormalType != AbnormalType.None;
         //发送信息
         MessageCenter.SendMessage(new CommonMessage()

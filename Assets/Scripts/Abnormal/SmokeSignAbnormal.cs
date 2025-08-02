@@ -54,7 +54,7 @@ public class SmokeSignAbnormal : AbnormalObject
         float distanceToTarget = directionToTarget.magnitude;
 
         // 检查是否应该移动的条件
-        bool shouldMove = distanceToTarget > followDistance && !IsTargetLooking();
+        bool shouldMove = distanceToTarget > followDistance && !IsTargetLooking() && distanceToTarget < stoppingDistance;
 
         if (shouldMove)
         {
