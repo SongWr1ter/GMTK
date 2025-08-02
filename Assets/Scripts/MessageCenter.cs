@@ -6,6 +6,7 @@ using UnityEngine;
 public enum MESSAGE_TYPE
 {
     ABNORMAL,
+    Pause,
 }
 public struct CommonMessage
 {

@@ -17,6 +17,7 @@ public class GameManager : SingleTon<GameManager>
     private const int maxLevel = 13;
     private AbnormalType currentAbnormalType = AbnormalType.None;
     private FadeInOut _fadeinout;
+    public bool isLoadingNextLevel = false;
     private FadeInOut fadeInOut
     {
         get
@@ -43,8 +44,20 @@ public class GameManager : SingleTon<GameManager>
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            MessageCenter.SendMessage(new CommonMessage()
+            {
+                Mid = 0
+            },MESSAGE_TYPE.Pause);
+        }
+    }
+
     public void NextScene(bool userChoice, bool fadeIn = true)
     {
+        isLoadingNextLevel = true;
         if (userChoice == hasAbnormal)
         {
             //回答正确
@@ -72,6 +85,7 @@ public class GameManager : SingleTon<GameManager>
                 SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name)!.completed += (asyncOperation) =>
                 {
                     InitScene();
+                    isLoadingNextLevel = false;
                 };
             }).SetAutoKill();
             // .SetLoops(loopTimes); 

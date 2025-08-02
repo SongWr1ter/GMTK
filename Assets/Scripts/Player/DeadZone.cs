@@ -10,7 +10,7 @@ public class DeadZone : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
             
-            if (other.CompareTag("Player") && !_flag)
+            if (other.CompareTag("Player") && !_flag && !GameManager.Instance.isLoadingNextLevel)
             {
                 _flag = true;
                 GameManager.Instance.GameOver();

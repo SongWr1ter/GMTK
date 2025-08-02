@@ -26,6 +26,7 @@ public class Window : MonoBehaviour,Interactive
     public void OnInteract()
     {
         //Play Audio interacting
+        HideInteract();
         if (audio_ing != "") SoundManager.PlayAudio(audio_ing);
         dialogue.Show(true,showText);
         StartCoroutine(AudioAfter());

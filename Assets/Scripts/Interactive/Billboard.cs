@@ -12,6 +12,7 @@ public class Billboard : MonoBehaviour,Interactive
     {
         SoundManager.PlayAudio(sfxName);
         _uiBillBoard.Show(true);
+        HideInteract();
     }
     
     public void ExitInteract()
