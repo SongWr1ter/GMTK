@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameManager : SingleTon<GameManager>
 {
@@ -14,6 +16,18 @@ public class GameManager : SingleTon<GameManager>
     private int currentLevel = 1;
     private const int maxLevel = 13;
     private AbnormalType currentAbnormalType = AbnormalType.None;
+    private FadeInOut _fadeinout;
+    private FadeInOut fadeInOut
+    {
+        get
+        {
+            if (_fadeinout == null)
+            {
+                _fadeinout = GameObject.Find("FadeInOut").GetComponent<FadeInOut>();
+            }
+            return _fadeinout;
+        }
+    }
 
     protected override void Awake()
     {
@@ -21,7 +35,15 @@ public class GameManager : SingleTon<GameManager>
         DontDestroyOnLoad(gameObject);
     }
 
-    public void NextScene(bool userChoice)
+    private void Start()
+    {
+        if (_fadeinout == null)
+        {
+            _fadeinout = GameObject.Find("FadeInOut").GetComponent<FadeInOut>();
+        }
+    }
+
+    public void NextScene(bool userChoice, bool fadeIn = true)
     {
         if (userChoice == hasAbnormal)
         {
@@ -38,10 +60,21 @@ public class GameManager : SingleTon<GameManager>
             currentLevel = Mathf.Max(currentLevel - 1, 1);
         }
         //异步重新加载这一个场景,并且添加一个回调函数:InitScene
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name)!.completed += (asyncOperation) =>
-        {
-            InitScene();
-        };
+        if (fadeIn)
+             fadeInOut.FadeIn(0.5f);
+        //用DoTween等1s
+        float timer = 0f;
+        float delayedTimer = 1f;
+        //DOTwwen.To()中参数：前两个参数是固定写法，第三个是到达的最终值，第四个是渐变过程所用的时间
+        DOTween.To(() => timer, x => timer = x, 1, delayedTimer)
+            .OnStepComplete(() =>
+            {
+                SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name)!.completed += (asyncOperation) =>
+                {
+                    InitScene();
+                };
+            }).SetAutoKill();
+            // .SetLoops(loopTimes); 
     }
 
     public void InitScene()
@@ -65,5 +98,20 @@ public class GameManager : SingleTon<GameManager>
     public AbnormalType GetCurrentAbnormalType()
     {
         return currentAbnormalType;
+    }
+
+    public void GameOver()
+    {
+        SoundManager.PlayAudio("die");
+        fadeInOut.FadeIn(0.2f);
+        float timer = 0f;
+        float delayedTimer = 3f;
+        //DOTwwen.To()中参数：前两个参数是固定写法，第三个是到达的最终值，第四个是渐变过程所用的时间
+        DOTween.To(() => timer, x => timer = x, 1, delayedTimer)
+            .OnStepComplete(() =>
+            {
+                NextScene(!hasAbnormal,false);
+            }).SetAutoKill();
+        
     }
 }

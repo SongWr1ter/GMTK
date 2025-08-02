@@ -12,6 +12,10 @@ public class RoomDoor :AbnormalObject,Interactive
     {
         if (_audioName != "")
             SoundManager.PlayAudio(_audioName);
+        else
+        {
+            SoundManager.PlayAudio(audioNames[0]);
+        }
     }
 
     protected override void Abnormalize(CommonMessage message)

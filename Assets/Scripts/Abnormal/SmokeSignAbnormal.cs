@@ -15,7 +15,6 @@ public class SmokeSignAbnormal : AbnormalObject
     [SerializeField] private float followDistance = 5f; // 停止跟踪的距离
     [SerializeField] private float moveSpeed = 3f; // 移动速度
     [SerializeField] private float acceleration = 5f; // 加速度
-    [SerializeField] private float stoppingDistance = 1f; // 完全停止的距离
 
     private void FixedUpdate()
     {
@@ -54,7 +53,7 @@ public class SmokeSignAbnormal : AbnormalObject
         float distanceToTarget = directionToTarget.magnitude;
 
         // 检查是否应该移动的条件
-        bool shouldMove = distanceToTarget > followDistance && !IsTargetLooking() && distanceToTarget < stoppingDistance;
+        bool shouldMove = distanceToTarget > followDistance && !IsTargetLooking();
 
         if (shouldMove)
         {

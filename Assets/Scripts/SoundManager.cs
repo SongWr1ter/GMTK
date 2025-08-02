@@ -7,7 +7,7 @@ using UnityEngine;
 //【重要】记得AUDIO_PATH设置音频路径
 public static class SoundManager 
 {
-    public const string AUDIO_PATH = "Audios/Effects/";//音效路径
+    public const string AUDIO_PATH = "Audios/sfx/";//音效路径
     private static GameObject oneShotObj;
     private static AudioSource oneShotAudioSource;
     private static GameObject defalutSoundObj_1;//没想好干啥,也许用来做BGM？可BGM直接在unity里面设置不就好了(没错我就是懒

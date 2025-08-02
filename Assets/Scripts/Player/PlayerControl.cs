@@ -143,6 +143,19 @@ public class PlayerControl : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(rb.position, interactiveRadius);
     }
+
+    public void PlayFootstepSound()
+    {
+        SoundManager.PlayAudio("Walk");
+    }
+
+    public void DeadAnim()
+    {
+        animator.SetTrigger("Dead");
+        this.enabled = false;
+        rb.velocity = Vector2.zero;
+    }
+    
 #if UNITY_EDITOR
     // 编辑器自动获取组件引用
     private void OnValidate()

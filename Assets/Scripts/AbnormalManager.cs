@@ -26,10 +26,18 @@ public class AbnormalManager
 {
     //维护一个所有异常事件表:id,描述
     //负责选择某个异常
-    private const float AbnormalProbability = 0.5f; //异常发生概率
+    private const float AbnormalProbability = 0.85f; //异常发生概率
+    //记录哪些异常已经被选取过了
+    private Dictionary<AbnormalType, bool> abnormalDictionary = new Dictionary<AbnormalType, bool>();
+    private int _abnormalLength = Enum.GetValues(typeof(AbnormalType)).Length;
     public AbnormalManager()
     {
-        
+        // Debug.Log(_abnormalLength);
+        //将AbnormalType初始化abnormalDictionary
+        for (int i = 1; i < _abnormalLength; i++)
+        {
+            abnormalDictionary.Add((AbnormalType)i, false);
+        }
     }
     
     public AbnormalType SelectAbnormal()
@@ -39,8 +47,12 @@ public class AbnormalManager
         {
             //触发异常
             //从AbnormalType中随机选择一个异常
-            Array values = Enum.GetValues(typeof(AbnormalType));
-            AbnormalType randomAbnormal = (AbnormalType)values.GetValue(UnityEngine.Random.Range(1, values.Length));
+            AbnormalType randomAbnormal = (AbnormalType)UnityEngine.Random.Range(1, _abnormalLength);
+            // while (abnormalDictionary[randomAbnormal])
+            // {
+            //     randomAbnormal = (AbnormalType)UnityEngine.Random.Range(1, _abnormalLength);
+            //     abnormalDictionary[randomAbnormal] = true;
+            // }
             //返回异常类型
             return randomAbnormal;
         }

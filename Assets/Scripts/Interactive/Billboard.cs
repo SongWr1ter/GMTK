@@ -7,8 +7,10 @@ public class Billboard : MonoBehaviour,Interactive
 {
     [SerializeField]private UIBillBoard _uiBillBoard;
     [SerializeField]private GameObject _interactButton;
+    [SerializeField]private string sfxName;
     public void OnInteract()
     {
+        SoundManager.PlayAudio(sfxName);
         _uiBillBoard.Show(true);
     }
     
